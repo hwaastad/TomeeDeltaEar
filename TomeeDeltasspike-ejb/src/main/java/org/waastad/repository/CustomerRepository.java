@@ -7,13 +7,21 @@ package org.waastad.repository;
 
 import org.apache.deltaspike.data.api.AbstractEntityRepository;
 import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 import org.waastad.entity.DeltaCustomer;
+import org.waastad.entity.DeltaCustomer_;
 
 /**
  *
  * @author Helge Waastad <helge@waastad.org>
  */
 @Repository
-public abstract class CustomerRepository extends AbstractEntityRepository<DeltaCustomer, Long> {
+public abstract class CustomerRepository extends AbstractEntityRepository<DeltaCustomer, Long> implements CriteriaSupport<DeltaCustomer> {
+
+    public DeltaCustomer findCustomerByName(String name) {
+        return criteria()
+                .like(DeltaCustomer_.name, name)
+                .getOptionalResult();
+    }
 
 }

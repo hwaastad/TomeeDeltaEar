@@ -6,11 +6,11 @@
 package org.waastad.view;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.deltaspike.core.api.scope.ViewAccessScoped;
+import org.apache.deltaspike.core.util.ExceptionUtils;
 import org.waastad.ejb.DeltaBean;
 import org.waastad.entity.DeltaCustomer;
 
@@ -25,11 +25,28 @@ public class ViewController implements Serializable {
     private static final long serialVersionUID = 2302175898239971184L;
     @Inject
     private DeltaBean deltaBean;
+    private String name;
 
     public void doAction(ActionEvent event) {
         System.out.println("doing jsf action");
-        DeltaCustomer c = new DeltaCustomer("actionname: " + new Date().toString());
+        DeltaCustomer c = new DeltaCustomer(name);
         deltaBean.save(c);
+    }
+
+    public void lookup(ActionEvent event) {
+        try {
+            deltaBean.lookupCustomer(name);
+        } catch (Exception e) {
+            System.out.println("Got Exception: " + e.getMessage());
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
