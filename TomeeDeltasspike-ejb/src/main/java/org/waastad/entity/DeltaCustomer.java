@@ -25,6 +25,7 @@ public class DeltaCustomer implements Serializable {
     private Long id;
 
     @Basic
+    //@UserName(groups = UniqueNameValidator.class)
     private String name;
 
     public DeltaCustomer(String name) {
