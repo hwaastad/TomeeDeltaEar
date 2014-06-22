@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<tomee>
+    <Deployments dir="apps" />
+    
+    <Resource id="DeltaDS" type="DataSource">
+        JdbcDriver   org.hsqldb.jdbcDriver
+        JdbcUrl      jdbc:hsqldb:mem:testDb
+        UserName     SA
+        Password     ""
+    </Resource>
+</tomee>
