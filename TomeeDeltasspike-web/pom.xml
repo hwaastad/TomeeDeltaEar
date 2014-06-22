@@ -32,17 +32,6 @@
             <version>6.0-6-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.deltaspike.core</groupId>
-            <artifactId>deltaspike-core-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.deltaspike.core</groupId>
-            <artifactId>deltaspike-core-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-jsf-module-api</artifactId>
@@ -92,12 +81,7 @@
                 <version>2.4</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <!-- <packagingExcludes>WEB-INF/lib/deltaspike-core*.jar</packagingExcludes>-->
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
+                    <packagingIncludes>WEB-INF/lib/deltaspike-jsf*.jar</packagingIncludes>
                 </configuration>
             </plugin>
         </plugins>
