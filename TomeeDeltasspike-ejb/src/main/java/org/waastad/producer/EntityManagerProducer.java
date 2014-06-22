@@ -3,29 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.waastad.producer;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 /**
  *
  * @author Helge Waastad <helge@waastad.org>
  */
+@ApplicationScoped
 public class EntityManagerProducer {
-    
-    @PersistenceContext(unitName = "DeltaPU")
-    private EntityManager em;
+
+    @PersistenceUnit
+    private EntityManagerFactory entityManagerFactory;
 
     @Produces
     @Default
+    @RequestScoped
     public EntityManager create() {
         System.out.println("Producing entitymanager.....");
-        return em;
+        return this.entityManagerFactory.createEntityManager();
+ 
     }
 
     public void close(@Disposes @Default EntityManager em) {
