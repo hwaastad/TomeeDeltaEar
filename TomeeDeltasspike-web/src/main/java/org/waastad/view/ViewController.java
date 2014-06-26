@@ -6,6 +6,7 @@
 package org.waastad.view;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,7 +36,9 @@ public class ViewController implements Serializable {
 
     public void lookup(ActionEvent event) {
         try {
-            deltaBean.lookupCustomer(name);
+            DeltaCustomer c = deltaBean.lookupCustomer(name);
+            c.setName(name + "-new");
+            deltaBean.update(c);
         } catch (Exception e) {
             System.out.println("Got Exception: " + e.getMessage());
         }

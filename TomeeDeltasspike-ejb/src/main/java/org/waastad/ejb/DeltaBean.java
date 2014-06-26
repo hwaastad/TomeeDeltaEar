@@ -27,4 +27,11 @@ public class DeltaBean {
     public DeltaCustomer lookupCustomer(String name) {
         return customerRepository.findCustomerByName(name);
     }
+
+    public DeltaCustomer update(DeltaCustomer customer) {
+        DeltaCustomer c = customerRepository.findBy(customer.getId());
+        c.setName(customer.getName());
+        customerRepository.save(c);
+        return c;
+    }
 }

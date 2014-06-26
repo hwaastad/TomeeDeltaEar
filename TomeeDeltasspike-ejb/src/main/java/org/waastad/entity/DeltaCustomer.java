@@ -11,12 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.apache.openjpa.persistence.DataCache;
 
 /**
  *
  * @author Helge Waastad <helge@waastad.org>
  */
 @Entity
+@DataCache
 public class DeltaCustomer implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -8,8 +8,11 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:panelGrid columns="2">
-            <p:commandButton value="Add customer" actionListener="#{viewController.doAction(event)}"/>
+            <p:panelGrid columns="3">
+                <p:inputText value="#{viewController.name}" placeholder="Write name"/>
+                <p:commandButton value="Add customer" actionListener="#{viewController.doAction(event)}"/>
+                <p:commandButton value="Lookup customer and change" actionListener="#{viewController.lookup(event)}"/>
+                <p:commandButton value="Lookup customer" actionListener="#{viewController.lookup(event)}"/>
             </p:panelGrid>
         </h:form>
     </h:body>

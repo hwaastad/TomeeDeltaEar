@@ -70,6 +70,9 @@
                             <extension>.css</extension>
                         </extensions>
                     </synchronization>
+                    <webapps>
+                        <webapp>org.apache.activemq:activemq-web-console:5.10.0?name=activemq</webapp>
+                    </webapps>
                     <reloadOnUpdate>true</reloadOnUpdate>
                     <removeDefaultWebapps>false</removeDefaultWebapps>
                 </configuration>
@@ -92,6 +95,7 @@
         </plugins>
     </build>
     <dependencies>
+        
         <dependency>
             <groupId>org.waastad</groupId>
             <artifactId>TomeeDeltasspike-ejb</artifactId>
@@ -147,4 +151,35 @@
             </exclusions>-->
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>node2</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <!--<directory>instance2</directory>-->
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.openejb.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                        <configuration>
+                            <systemVariables>
+                            </systemVariables>
+                            <catalinaBase>${project.build.directory}/instance2</catalinaBase>
+                            <!-- <args>-Dopenejb.session-context=http -Dtomee.session-context.wrapper=http</args>-->
+                            <tomeeShutdownPort>8016</tomeeShutdownPort>
+                            <tomeeHttpPort>8082</tomeeHttpPort>
+                            <tomeeHttpsPort>8444</tomeeHttpsPort>
+                            <tomeeAjpPort>10040</tomeeAjpPort>
+                            <config>src/main/tomee2/conf</config>
+                            <removeDefaultWebapps>false</removeDefaultWebapps>
+                            <quickSession>false</quickSession>
+                            <reloadOnUpdate>true</reloadOnUpdate>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

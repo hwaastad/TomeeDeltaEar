@@ -23,5 +23,4 @@ public abstract class CustomerRepository extends AbstractEntityRepository<DeltaC
                 .like(DeltaCustomer_.name, name)
                 .getOptionalResult();
     }
-
 }
