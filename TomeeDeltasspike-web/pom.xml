@@ -25,11 +25,17 @@
             <artifactId>TomeeDeltasspike-ejb</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>6.0-6-SNAPSHOT</version>
+            <version>6.0-6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -59,6 +65,11 @@
             <version>2.1.15</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>1.8.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -81,8 +92,20 @@
                 <version>2.4</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <packagingIncludes>WEB-INF/lib/deltaspike-jsf*.jar</packagingIncludes>
+                    <!-- <packagingIncludes>WEB-INF/lib/deltaspike-jsf*.jar</packagingIncludes>-->
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.openejb.maven</groupId>
+                <artifactId>jarstxt-maven-plugin</artifactId>
+                <version>${openejb.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

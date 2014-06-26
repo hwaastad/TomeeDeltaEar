@@ -27,6 +27,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-impl</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-data-module-api</artifactId>
             <scope>compile</scope>
@@ -35,7 +43,7 @@
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-data-module-impl</artifactId>
             <scope>runtime</scope>
-            <exclusions>
+         <!--   <exclusions>
                 <exclusion>
                     <groupId>org.apache.deltaspike.core</groupId>
                     <artifactId>deltaspike-core-impl</artifactId>
@@ -44,7 +52,7 @@
                     <groupId>org.apache.deltaspike.core</groupId>
                     <artifactId>deltaspike-core-api</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>

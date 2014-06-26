@@ -37,6 +37,13 @@
                     <version>6</version>
                     <defaultJavaBundleDir>lib/</defaultJavaBundleDir>
                     <skinnyWars>false</skinnyWars>
+                    <modules>
+                        <webModule>
+                            <groupId>org.waastad</groupId>
+                            <artifactId>TomeeDeltasspike-web</artifactId>
+                            <contextRoot>/TomeeDeltaSpike</contextRoot>
+                        </webModule>
+                    </modules>
                 </configuration>
             </plugin>
             <plugin>
@@ -67,6 +74,21 @@
                     <removeDefaultWebapps>false</removeDefaultWebapps>
                 </configuration>
             </plugin>
+          <!--  <plugin>
+                <groupId>org.apache.openejb.maven</groupId>
+                <artifactId>jarstxt-maven-plugin</artifactId>
+                <version>${openejb.version}</version>
+                <configuration>
+                    <outputFile>${project.build.directory}/${project.build.finalName}/lib/jars.txt</outputFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
     <dependencies>
@@ -82,7 +104,7 @@
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
-        <!-- <dependency>
+        <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
             <artifactId>deltaspike-core-api</artifactId>
         </dependency>
@@ -105,7 +127,7 @@
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-jpa-module-impl</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-security-module-api</artifactId>

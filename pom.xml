@@ -14,6 +14,7 @@
     <properties>
         <deltaspike.version>1.0.0</deltaspike.version>
         <tomee.version>1.7.0-SNAPSHOT</tomee.version>
+        <openejb.version>4.7.0-SNAPSHOT</openejb.version>
         <tomee.classifier>plus</tomee.classifier>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
