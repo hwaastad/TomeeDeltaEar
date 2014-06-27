@@ -4,10 +4,24 @@
     <!-- jdbc:hsqldb:mem:mydb -->
     <!-- jdbc:hsqldb:hsql://localhost/mydb -->
     <Resource id="DeltaDS" type="DataSource">
-        JdbcDriver   org.hsqldb.jdbcDriver
-        JdbcUrl      jdbc:hsqldb:hsql://localhost/mydb
-        UserName     sa
-        Password     sa
+        JdbcDriver                      org.hsqldb.jdbcDriver
+        JdbcUrl                         jdbc:hsqldb:hsql://localhost/mydb
+        UserName                        sa
+        Password                        sa
+        testWhileIdle                   true
+        testOnBorrow                    true
+        testOnReturn                    false
+        validationQuery                 SELECT 1
+        validationInterval              30000
+        timeBetweenEvictionRunsMillis   5000
+        maxActive                       100
+        minIdle                         10
+        maxWait                         10000
+        initialSize                     10
+        removeAbandonedTimeout          60
+        removeAbandoned                 true
+        logAbandoned                    true
+        minEvictableIdleTimeMillis      30000
     </Resource>
     
     <Resource id="MyJmsResourceAdapter" type="ActiveMQResourceAdapter">

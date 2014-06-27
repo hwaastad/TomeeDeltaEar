@@ -61,10 +61,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa-persistence</artifactId>
-            <version>2.3.0</version>
-            <scope>provided</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.1</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -90,59 +98,27 @@
                     <ejbVersion>3.1</ejbVersion>
                 </configuration>
             </plugin>
-            <!--   <plugin>
-                <groupId>org.apache.openjpa</groupId>
-                <artifactId>openjpa-maven-plugin</artifactId>
-                <version>2.3.0</version>
-                <configuration>
-                    <includes>**/entity/*.class</includes>
-                    <excludes>**/entity/XML*.class</excludes>
-                    <addDefaultConstructor>true</addDefaultConstructor>               
-                    <enforcePropertyRestrictions>true</enforcePropertyRestrictions>
-                </configuration>
+            <plugin>
+                <groupId>de.empulse.eclipselink</groupId>
+                <artifactId>staticweave-maven-plugin</artifactId>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
-                        <id>enhancer</id>
                         <phase>process-classes</phase>
                         <goals>
-                            <goal>enhance</goal>
+                            <goal>weave</goal>
                         </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.openjpa</groupId>
-                        <artifactId>openjpa</artifactId>
-                        <version>2.3.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>-->
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>2.2.4</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
-                            <processors>
-                                <processor>org.apache.openjpa.persistence.meta.AnnotationProcessor6</processor>
-                            </processors>
-                            <optionMap>
-                                <openjpa.metamodel>true</openjpa.metamodel>
-                            </optionMap>
+                            <persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
+                            <logLevel>FINE</logLevel>
                         </configuration>
                     </execution>
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>org.apache.openjpa</groupId>
-                        <artifactId>openjpa</artifactId>
-                        <version>2.3.0</version>
+                        <groupId>org.eclipse.persistence</groupId>
+                        <artifactId>org.eclipse.persistence.jpa</artifactId>
+                        <version>2.5.1</version>
                     </dependency>
                 </dependencies>
             </plugin>

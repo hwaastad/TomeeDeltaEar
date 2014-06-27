@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.waastad.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -19,12 +20,19 @@ import javax.persistence.Id;
  */
 @Entity
 public class DeltaUser implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @TableGenerator(table = "ID_TABLE", name = "UserIdTable",
+//            allocationSize = 1000, initialValue = 0, pkColumnName = "pk",
+//            valueColumnName = "value", pkColumnValue = "user")
+//    @GeneratedValue(strategy = GenerationType.TABLE, generator = "UserIdTable")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Basic
+    @Column(nullable = false)
+    @NotNull
     private String username;
 
     public Long getId() {
@@ -67,5 +75,5 @@ public class DeltaUser implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
 }

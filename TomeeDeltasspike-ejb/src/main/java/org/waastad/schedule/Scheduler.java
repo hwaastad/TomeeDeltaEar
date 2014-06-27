@@ -5,6 +5,7 @@
  */
 package org.waastad.schedule;
 
+import java.util.List;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -25,14 +26,12 @@ public class Scheduler {
     @Inject
     private CustomerRepository customerRepository;
     
-    @Schedule(hour = "*", minute = "*", second = "*/10")
+    //@Schedule(hour = "*", minute = "*", second = "*/10")
     public void doStuff() {
         LOG.info("Found {} customers", customerRepository.count());
-        DeltaCustomer c = customerRepository.findBy(2L);
-        if (c == null) {
-            LOG.info("No customer 2 found");
-        } else {
-            LOG.info("Found customer {} by id 2", c.getName());
-        }
+        List<DeltaCustomer> c = customerRepository.findAll();
+//        for (DeltaCustomer k : c) {
+//            LOG.info("Customer {} has {} users", k.getName(), k.getUserCollection().size());
+//        }
     }
 }

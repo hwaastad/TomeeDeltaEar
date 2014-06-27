@@ -14,7 +14,6 @@ import org.waastad.entity.DeltaCustomer;
 import org.waastad.entity.DeltaUser;
 import org.waastad.repository.CustomerRepository;
 import org.waastad.repository.UserRepository;
-import org.waastad.schedule.Scheduler;
 
 /**
  *
@@ -39,19 +38,23 @@ public class DeltaBean {
         LOG.info("Lookup customer");
         return customerRepository.findCustomerByName(name);
     }
+    
+    public DeltaCustomer lookupCustomerById(Long id) {
+        LOG.info("Lookup customerId");
+        DeltaCustomer c = customerRepository.findBy(id);
+        return c;
+    }
 
     public DeltaCustomer update(DeltaCustomer customer) {
-        LOG.info("Update customer, user collection: {}", customer.getUserCollection().size());
+        LOG.info("Update customer {}", customer.getId());
         DeltaCustomer c = customerRepository.findBy(customer.getId());
         c.setName(customer.getName());
-        c.setUserCollection(customer.getUserCollection());
-        customerRepository.save(c);
+        //customerRepository.save(c);
         return c;
     }
 
     public DeltaCustomer addUsertoCustomer(DeltaCustomer customer, DeltaUser user) {
         DeltaCustomer c = customerRepository.findBy(customer.getId());
-        userRepository.save(user);
         c.getUserCollection().add(user);
         return c;
     }
@@ -62,6 +65,11 @@ public class DeltaBean {
     }
 
     public List<DeltaCustomer> findAll() {
-        return customerRepository.findAll();
+        List<DeltaCustomer> list = customerRepository.findAll();
+        return list;
+    }
+    
+    public List<DeltaCustomer> findAllCache() {
+        return customerRepository.findAllCacheOnly();
     }
 }

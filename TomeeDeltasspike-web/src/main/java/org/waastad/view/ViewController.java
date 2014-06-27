@@ -12,9 +12,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.deltaspike.core.api.scope.ViewAccessScoped;
+import org.apache.deltaspike.core.api.scope.WindowScoped;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.waastad.ejb.DeltaBean;
 import org.waastad.entity.DeltaCustomer;
 import org.waastad.entity.DeltaUser;
@@ -24,8 +26,10 @@ import org.waastad.entity.DeltaUser;
  * @author Helge Waastad <helge.waastad@datametrix.no>
  */
 @Named
-@ViewAccessScoped
+@WindowScoped
 public class ViewController implements Serializable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ViewController.class);
 
     private static final long serialVersionUID = 2302175898239971184L;
     @Inject
@@ -39,6 +43,10 @@ public class ViewController implements Serializable {
     public void init() {
         dataList.addAll(deltaBean.findAll());
     }
+    
+    public void updateTaleLitsner(){
+        dataList = deltaBean.findAllCache();
+    }
 
     public void prepare(ActionEvent event) {
         customer = new DeltaCustomer();
@@ -49,19 +57,16 @@ public class ViewController implements Serializable {
     }
 
     public void saveUser(ActionEvent event) {
-        customer.getUserCollection().add(user);
         deltaBean.addUsertoCustomer(customer, user);
     }
 
     public void save(ActionEvent event) {
         customer = deltaBean.save(customer);
-        dataList.add(customer);
         Messages.addGlobalInfo("Customer saved!");
     }
 
     public void delete(ActionEvent event) {
         deltaBean.delete(customer);
-        dataList.remove(customer);
         Messages.addGlobalInfo("Customer deleted!");
     }
 
@@ -72,7 +77,7 @@ public class ViewController implements Serializable {
             context.update("mainForm:table");
             Messages.addGlobalInfo("Customer updated!");
         } catch (Exception e) {
-            System.out.println("Got Exception: " + e.getMessage());
+            LOG.error("Got Exception: {}", e.getMessage());
         }
     }
 

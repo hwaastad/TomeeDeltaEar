@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="DeltaPU" transaction-type="JTA">
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
-        <!--  <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+       <!-- <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>-->
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>DeltaDS</jta-data-source>
         <class>org.waastad.entity.DeltaCustomer</class>
         <class>org.waastad.entity.DeltaUser</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>ALL</shared-cache-mode>
         <properties>
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+         <!--   <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
             <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>
             <property name="openjpa.DynamicEnhancementAgent" value="true"/>
             <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
             <property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=72, PrintParameters=true, MaxActive=10, MaxIdle=5, MinIdle=2, MaxWait=60000"/>
-            <!-- <property name="openjpa.DataCache" value="true(CacheSize=5000, SoftReferenceSize=0)"/>-->
-            <!-- <property name="openjpa.RemoteCommitProvider" value="jms(Topic=OpenJPACommitProviderTopic,
-            TopicConnectionFactory=TopicConnectionFactory,
-            topic.OpenJPACommitProviderTopic=DeltaSpikeTopic,
-            java.naming.factory.initial=org.apache.activemq.jndi.ActiveMQInitialContextFactory,
-            java.naming.provider.url=tcp://localhost:61616)"/>-->
-            <!-- <property name="openjpa.RemoteCommitProvider" value="jms(Topic=openejb:Resource/OpenJPACommitProviderTopic,                 TopicConnectionFactory=openejb:Resource/MyJmsConnectionFactory,                 java.naming.provider.url=tcp://localhost:8080)"/>-->
-      
-            <!--  <property name="eclipselink.logging.level" value="FINE"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>-->
+            <property name="openjpa.DataCache" value="true(EnableStatistics=true)"/>
+            <property name="openjpa.RemoteCommitProvider" value="jms(Topic=openejb:Resource/OpenJPACommitProviderTopic,TopicConnectionFactory=openejb:Resource/MyJmsConnectionFactory,java.naming.provider.url=tcp://localhost:8080)"/>
+            -->
+            <property name="eclipselink.jpa.uppercase-column-names" value="true"/>
+            <property name="eclipselink.cache.coordination.protocol" value="jms"/>
+            <property name="eclipselink.cache.coordination.jms.topic" value="openejb:Resource/OpenJPACommitProviderTopic"/>
+            <property name="eclipselink.cache.coordination.jms.factory" value="openejb:Resource/MyJmsConnectionFactory"/>
+            <property name="eclipselink.cache.coordination.jms.reuse-topic-publisher" value="true"/>
+            <property name="eclipselink.cache.coordination.remove-connection-on-error" value="true"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
         </properties>
     </persistence-unit>
 </persistence>

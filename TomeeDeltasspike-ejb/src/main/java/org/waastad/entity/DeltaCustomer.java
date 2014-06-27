@@ -11,13 +11,12 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import org.apache.openjpa.persistence.DataCache;
+import javax.persistence.TableGenerator;
 
 /**
  *
@@ -28,13 +27,17 @@ public class DeltaCustomer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+//    @TableGenerator(table = "ID_TABLE", name = "CustomerIdTable",
+//            allocationSize = 1000, initialValue = 0, pkColumnName = "pk",
+//            valueColumnName = "value", pkColumnValue = "customer")
+//    @GeneratedValue(strategy = GenerationType.TABLE, generator = "CustomerIdTable")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Collection<DeltaUser> userCollection;
 
@@ -84,10 +87,10 @@ public class DeltaCustomer implements Serializable {
     }
 
     public Collection<DeltaUser> getUserCollection() {
-        if (userCollection == null) {
-            userCollection = new ArrayList<>();
+        if (this.userCollection == null) {
+            this.userCollection = new ArrayList<>();
         }
-        return userCollection;
+        return this.userCollection;
     }
 
     public void setUserCollection(Collection<DeltaUser> userCollection) {
