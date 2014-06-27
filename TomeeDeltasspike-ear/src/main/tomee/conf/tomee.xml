@@ -2,6 +2,8 @@
 <tomee>
     <Deployments dir="apps" />
     
+    <!-- jdbc:hsqldb:mem:mydb -->
+    <!-- jdbc:hsqldb:hsql://localhost/mydb -->
     <Resource id="DeltaDS" type="DataSource">
         JdbcDriver   org.hsqldb.jdbcDriver
         JdbcUrl      jdbc:hsqldb:hsql://localhost/mydb

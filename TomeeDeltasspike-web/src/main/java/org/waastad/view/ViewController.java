@@ -6,14 +6,18 @@
 package org.waastad.view;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.deltaspike.core.api.scope.ViewAccessScoped;
-import org.apache.deltaspike.core.util.ExceptionUtils;
+import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.waastad.ejb.DeltaBean;
 import org.waastad.entity.DeltaCustomer;
+import org.waastad.entity.DeltaUser;
 
 /**
  *
@@ -27,18 +31,46 @@ public class ViewController implements Serializable {
     @Inject
     private DeltaBean deltaBean;
     private String name;
+    private List<DeltaCustomer> dataList = new ArrayList<>();
+    private DeltaCustomer customer;
+    private DeltaUser user;
 
-    public void doAction(ActionEvent event) {
-        System.out.println("doing jsf action");
-        DeltaCustomer c = new DeltaCustomer(name);
-        deltaBean.save(c);
+    @PostConstruct
+    public void init() {
+        dataList.addAll(deltaBean.findAll());
     }
 
-    public void lookup(ActionEvent event) {
+    public void prepare(ActionEvent event) {
+        customer = new DeltaCustomer();
+    }
+
+    public void prepareUser(ActionEvent event) {
+        user = new DeltaUser();
+    }
+
+    public void saveUser(ActionEvent event) {
+        customer.getUserCollection().add(user);
+        deltaBean.addUsertoCustomer(customer, user);
+    }
+
+    public void save(ActionEvent event) {
+        customer = deltaBean.save(customer);
+        dataList.add(customer);
+        Messages.addGlobalInfo("Customer saved!");
+    }
+
+    public void delete(ActionEvent event) {
+        deltaBean.delete(customer);
+        dataList.remove(customer);
+        Messages.addGlobalInfo("Customer deleted!");
+    }
+
+    public void update(ActionEvent event) {
+        RequestContext context = RequestContext.getCurrentInstance();
         try {
-            DeltaCustomer c = deltaBean.lookupCustomer(name);
-            c.setName(name + "-new");
-            deltaBean.update(c);
+            deltaBean.update(customer);
+            context.update("mainForm:table");
+            Messages.addGlobalInfo("Customer updated!");
         } catch (Exception e) {
             System.out.println("Got Exception: " + e.getMessage());
         }
@@ -50,6 +82,30 @@ public class ViewController implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<DeltaCustomer> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<DeltaCustomer> dataList) {
+        this.dataList = dataList;
+    }
+
+    public DeltaCustomer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(DeltaCustomer customer) {
+        this.customer = customer;
+    }
+
+    public DeltaUser getUser() {
+        return user;
+    }
+
+    public void setUser(DeltaUser user) {
+        this.user = user;
     }
 
 }

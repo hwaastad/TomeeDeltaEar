@@ -2,19 +2,85 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Test Page</title>
     </h:head>
     <h:body>
-        <h:form>
-            <p:panelGrid columns="3">
-                <p:inputText value="#{viewController.name}" placeholder="Write name"/>
-                <p:commandButton value="Add customer" actionListener="#{viewController.doAction(event)}"/>
-                <p:commandButton value="Lookup customer and change" actionListener="#{viewController.lookup(event)}"/>
-                <p:commandButton value="Lookup customer" actionListener="#{viewController.lookup(event)}"/>
-            </p:panelGrid>
+        <p:growl autoUpdate="true" globalOnly="false"/>
+        <h:form id="mainForm">
+            <p:contextMenu for="table">
+                <p:menuitem value="view users" icon="ui-icon-view" oncomplete="PF('userVar').show()" update=":userForm"/>
+                <p:menuitem value="add user" icon="ui-icon-view" oncomplete="PF('addUserVar').show()" update=":addUserForm" actionListener="#{viewController.prepareUser(event)}"/>
+                <p:menuitem value="edit" icon="ui-icon-edit" oncomplete="PF('editVar').show()" update=":editForm"/>
+                <p:menuitem value="delete" icon="ui-icon-edit" actionListener="#{viewController.delete(event)}" update="table"/>
+            </p:contextMenu>
+            <p:dataTable id="table" value="#{viewController.dataList}" var="item" selectionMode="single" selection="#{viewController.customer}"
+                         rowKey="#{item.id}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column headerText="Name">
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Add" oncomplete="PF('addVar').show()" actionListener="#{viewController.prepare(event)}" update=":addForm"/>
+                </f:facet>
+            </p:dataTable>
         </h:form>
+
+        <p:dialog widgetVar="addUserVar">
+            <h:form id="addUserForm">
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="customer" value="Customer"/>
+                    <h:outputText id="customer" value="#{viewController.customer.name}"/>
+                    <p:outputLabel value="Username:" for="username" />
+                    <p:inputText id="username" value="#{viewController.user.username}" title="Username" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Add" actionListener="#{viewController.saveUser(event)}" oncomplete="PF('addUserVar').hide()"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="userVar">
+            <h:form id="userForm">
+                <p:dataTable value="#{viewController.customer.userCollection}" var="item">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column headerText="Username">
+                        <h:outputText value="#{item.username}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="addVar">
+            <h:form id="addForm">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Name:" for="name" />
+                    <p:inputText id="name" value="#{viewController.customer.name}" title="Name" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Save" actionListener="#{viewController.save(event)}" update=":mainForm:table" oncomplete="PF('addVar').hide()"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="editVar">
+            <h:form id="editForm">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Id:" for="id"/>
+                    <h:outputText id="id" value="#{viewController.customer.id}"/>
+                    <p:outputLabel value="Name:" for="name" />
+                    <p:inputText id="name" value="#{viewController.customer.name}" title="Name" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Update" actionListener="#{viewController.update(event)}" oncomplete="PF('editVar').hide()"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
     </h:body>
 </html>
 

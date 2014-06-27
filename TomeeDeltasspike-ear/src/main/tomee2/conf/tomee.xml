@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <tomee>
     <Deployments dir="apps" />
-    
+    <!-- jdbc:hsqldb:mem:mydb -->
+    <!-- jdbc:hsqldb:hsql://localhost/mydb -->
     <Resource id="DeltaDS" type="DataSource">
         JdbcDriver   org.hsqldb.jdbcDriver
         JdbcUrl      jdbc:hsqldb:hsql://localhost/mydb
@@ -10,7 +11,7 @@
     </Resource>
     
     <Resource id="MyJmsResourceAdapter" type="ActiveMQResourceAdapter">
-        BrokerXmlConfig =  broker:(tcp://localhost:61616)
+        BrokerXmlConfig =  
         ServerUrl       =  tcp://localhost:61616
     </Resource>
 
