@@ -72,6 +72,7 @@
                     </synchronization>
                     <webapps>
                         <webapp>org.apache.activemq:activemq-web-console:5.10.0?name=activemq</webapp>
+                      <!--  <lib>org.apache.openejb:openejb-concurrency-utilities-ee:${openejb.version}</lib>-->
                     </webapps>
                     <reloadOnUpdate>true</reloadOnUpdate>
                     <removeDefaultWebapps>false</removeDefaultWebapps>

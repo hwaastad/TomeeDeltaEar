@@ -57,7 +57,8 @@ public class ViewController implements Serializable {
     }
 
     public void saveUser(ActionEvent event) {
-        deltaBean.addUsertoCustomer(customer, user);
+        customer.getUserCollection().add(user);
+        deltaBean.addUsertoCustomer(customer);
     }
 
     public void save(ActionEvent event) {

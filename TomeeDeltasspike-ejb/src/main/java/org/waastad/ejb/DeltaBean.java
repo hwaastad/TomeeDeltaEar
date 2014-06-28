@@ -41,22 +41,18 @@ public class DeltaBean {
     
     public DeltaCustomer lookupCustomerById(Long id) {
         LOG.info("Lookup customerId");
-        DeltaCustomer c = customerRepository.findBy(id);
-        return c;
+        return customerRepository.findBy(id);
     }
 
     public DeltaCustomer update(DeltaCustomer customer) {
         LOG.info("Update customer {}", customer.getId());
-        DeltaCustomer c = customerRepository.findBy(customer.getId());
-        c.setName(customer.getName());
-        //customerRepository.save(c);
-        return c;
+        customerRepository.findBy(customer.getId());
+        return customerRepository.save(customer);
     }
 
-    public DeltaCustomer addUsertoCustomer(DeltaCustomer customer, DeltaUser user) {
-        DeltaCustomer c = customerRepository.findBy(customer.getId());
-        c.getUserCollection().add(user);
-        return c;
+    public DeltaCustomer addUsertoCustomer(DeltaCustomer customer) {
+        customerRepository.findBy(customer.getId());
+        return  customerRepository.save(customer);
     }
 
     public void delete(DeltaCustomer customer) {
