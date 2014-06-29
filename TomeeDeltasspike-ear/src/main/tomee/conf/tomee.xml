@@ -39,6 +39,7 @@
     </Container>
 
     <Resource id="FooQueue" type="javax.jms.Queue"/>
+    <Resource id="EventQueue" type="javax.jms.Queue"/>
     <Resource id="BarTopic" type="javax.jms.Topic"/>
     <Resource id="OpenJPACommitProviderTopic" type="javax.jms.Topic"/>
 </tomee>

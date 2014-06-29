@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.waastad.entity.DeltaCustomer;
 import org.waastad.entity.DeltaUser;
+import org.waastad.jms.EventMessage;
+import org.waastad.jms.JmsService;
 import org.waastad.repository.CustomerRepository;
 import org.waastad.repository.UserRepository;
 
@@ -28,17 +30,21 @@ public class DeltaBean {
     private CustomerRepository customerRepository;
     @Inject
     private UserRepository userRepository;
+    @Inject
+    private JmsService jmsService;
 
     public DeltaCustomer save(DeltaCustomer customer) {
         LOG.info("Saving customer");
-        return customerRepository.save(customer);
+        DeltaCustomer c =  customerRepository.saveAndFlushAndRefresh(customer);
+        jmsService.sendEvent(new EventMessage("Customer saved", customer));
+        return c;
     }
 
     public DeltaCustomer lookupCustomer(String name) {
         LOG.info("Lookup customer");
         return customerRepository.findCustomerByName(name);
     }
-    
+
     public DeltaCustomer lookupCustomerById(Long id) {
         LOG.info("Lookup customerId");
         return customerRepository.findBy(id);
@@ -47,12 +53,8 @@ public class DeltaBean {
     public DeltaCustomer update(DeltaCustomer customer) {
         LOG.info("Update customer {}", customer.getId());
         customerRepository.findBy(customer.getId());
+        jmsService.sendEvent(new EventMessage("Customer update", customer));
         return customerRepository.save(customer);
-    }
-
-    public DeltaCustomer addUsertoCustomer(DeltaCustomer customer) {
-        customerRepository.findBy(customer.getId());
-        return  customerRepository.save(customer);
     }
 
     public void delete(DeltaCustomer customer) {
@@ -64,7 +66,7 @@ public class DeltaBean {
         List<DeltaCustomer> list = customerRepository.findAll();
         return list;
     }
-    
+
     public List<DeltaCustomer> findAllCache() {
         return customerRepository.findAllCacheOnly();
     }

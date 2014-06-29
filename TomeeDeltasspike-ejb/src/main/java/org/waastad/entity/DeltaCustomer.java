@@ -31,15 +31,19 @@ public class DeltaCustomer implements Serializable {
 //            allocationSize = 1000, initialValue = 0, pkColumnName = "pk",
 //            valueColumnName = "value", pkColumnValue = "customer")
 //    @GeneratedValue(strategy = GenerationType.TABLE, generator = "CustomerIdTable")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Basic
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Collection<DeltaUser> userCollection;
+
+    @OneToMany(targetEntity = EventLog.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer",referencedColumnName = "id")
+    private Collection<EventLog> tEventLogsCollection;
 
     public DeltaCustomer(String name) {
         this.name = name;
@@ -95,6 +99,14 @@ public class DeltaCustomer implements Serializable {
 
     public void setUserCollection(Collection<DeltaUser> userCollection) {
         this.userCollection = userCollection;
+    }
+
+    public Collection<EventLog> gettEventLogsCollection() {
+        return tEventLogsCollection;
+    }
+
+    public void settEventLogsCollection(Collection<EventLog> tEventLogsCollection) {
+        this.tEventLogsCollection = tEventLogsCollection;
     }
 
 }

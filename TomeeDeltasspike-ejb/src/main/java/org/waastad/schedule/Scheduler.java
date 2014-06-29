@@ -12,6 +12,9 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.waastad.entity.DeltaCustomer;
+import org.waastad.jms.EventMessage;
+import org.waastad.jms.JmsService;
+import org.waastad.qualifier.JmsSession;
 import org.waastad.repository.CustomerRepository;
 
 /**
@@ -20,16 +23,21 @@ import org.waastad.repository.CustomerRepository;
  */
 @Singleton
 public class Scheduler {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(Scheduler.class);
-    
+
     @Inject
     private CustomerRepository customerRepository;
-    
-    //@Schedule(hour = "*", minute = "*", second = "*/10")
+
+    @Inject
+    private JmsService jmsService;
+
+    @Schedule(hour = "*", minute = "*", second = "*/10")
     public void doStuff() {
-        LOG.info("Found {} customers", customerRepository.count());
+        LOG.info("Found {} customers, eventlog size: {}", customerRepository.count());
+        jmsService.sendEvent(new EventMessage("doing stuff...."));
         List<DeltaCustomer> c = customerRepository.findAll();
+        
 //        for (DeltaCustomer k : c) {
 //            LOG.info("Customer {} has {} users", k.getName(), k.getUserCollection().size());
 //        }
