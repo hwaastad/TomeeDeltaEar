@@ -16,13 +16,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.TableGenerator;
+import javax.persistence.SequenceGenerator;
 
 /**
  *
  * @author Helge Waastad <helge@waastad.org>
  */
 @Entity
+@SequenceGenerator(name = "deltacustomer_seq", initialValue = 1, allocationSize = 100, sequenceName = "deltacustomer_seq")
 public class DeltaCustomer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +32,8 @@ public class DeltaCustomer implements Serializable {
 //            allocationSize = 1000, initialValue = 0, pkColumnName = "pk",
 //            valueColumnName = "value", pkColumnValue = "customer")
 //    @GeneratedValue(strategy = GenerationType.TABLE, generator = "CustomerIdTable")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deltacustomer_seq")
     private Long id;
 
     @Basic
@@ -41,8 +43,8 @@ public class DeltaCustomer implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Collection<DeltaUser> userCollection;
 
-    @OneToMany(targetEntity = EventLog.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer",referencedColumnName = "id")
+    @OneToMany(targetEntity = EventLog.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer", referencedColumnName = "id")
     private Collection<EventLog> tEventLogsCollection;
 
     public DeltaCustomer(String name) {

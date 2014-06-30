@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
  * @author Helge Waastad <helge.waastad@datametrix.no>
  */
 @Entity
+@SequenceGenerator(name="deltauser_seq", initialValue=1, allocationSize=100,sequenceName = "deltauser_seq")
 public class DeltaUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,7 +29,7 @@ public class DeltaUser implements Serializable {
 //            allocationSize = 1000, initialValue = 0, pkColumnName = "pk",
 //            valueColumnName = "value", pkColumnValue = "user")
 //    @GeneratedValue(strategy = GenerationType.TABLE, generator = "UserIdTable")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "deltauser_seq")
     private Long id;
 
     @Basic

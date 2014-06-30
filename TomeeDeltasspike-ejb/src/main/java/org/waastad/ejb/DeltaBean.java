@@ -35,7 +35,7 @@ public class DeltaBean {
 
     public DeltaCustomer save(DeltaCustomer customer) {
         LOG.info("Saving customer");
-        DeltaCustomer c =  customerRepository.saveAndFlushAndRefresh(customer);
+        DeltaCustomer c =  customerRepository.save(customer);
         jmsService.sendEvent(new EventMessage("Customer saved", customer));
         return c;
     }

@@ -13,6 +13,8 @@ import java.io.Serializable;
  */
 public class EventMessage implements Serializable {
 
+    private static final long serialVersionUID = 3860546400350796961L;
+
     private String message;
     private Object customer;
 
