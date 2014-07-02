@@ -26,6 +26,9 @@ public class EntityManagerProducer {
 
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
+    
+//    @PersistenceContext(unitName = "DeltaPU")
+//    private EntityManager em;
 
     @Produces
     @Default
@@ -42,4 +45,18 @@ public class EntityManagerProducer {
             em.close();
         }
     }
+    
+//    @Produces
+//    @Default
+//    public EntityManager create() {
+//        LOG.info("Producing entitymanager.....");
+//        return em;
+//    }
+//
+//    public void close(@Disposes @Default EntityManager em) {
+//        LOG.info("Disposing entitymanager.....");
+//        if (em.isOpen()) {
+//            em.close();
+//        }
+//    }
 }

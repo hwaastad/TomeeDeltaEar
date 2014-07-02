@@ -5,6 +5,7 @@
  */
 package org.waastad.entity;
 
+import de.hashcode.validation.UniqueKey;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,6 +24,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @SequenceGenerator(name="deltauser_seq", initialValue=1, allocationSize=100,sequenceName = "deltauser_seq")
+//@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "username", "customer" }))
+//@UniqueKey(property = "username")
+@UniqueKey.List(value = {})
 public class DeltaUser implements Serializable {
 
     private static final long serialVersionUID = 1L;

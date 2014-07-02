@@ -42,13 +42,12 @@ public class MessageListener implements javax.jms.MessageListener {
             EventLog log = new EventLog(new Date(), eventLogMessage.getMessage());
             if (null != eventLogMessage.getCustomer()) {
                 Long id = ((DeltaCustomer) eventLogMessage.getCustomer()).getId();
-                DeltaCustomer c = customerRepository.findBy(((DeltaCustomer) eventLogMessage.getCustomer()).getId());
+                DeltaCustomer c = customerRepository.findBy(id);
                 c.gettEventLogsCollection().add(log);
-                customerRepository.save(c);
             } else {
                 eventLogRepository.save(log);
             }
-            eventLogRepository.save(log);
+//            eventLogRepository.save(log);
         } catch (JMSException e) {
 
         }

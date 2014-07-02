@@ -104,6 +104,9 @@ public class DeltaCustomer implements Serializable {
     }
 
     public Collection<EventLog> gettEventLogsCollection() {
+        if (tEventLogsCollection == null){
+            tEventLogsCollection = new ArrayList<>();
+        }
         return tEventLogsCollection;
     }
 

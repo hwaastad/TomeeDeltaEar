@@ -32,7 +32,7 @@ public class Scheduler {
     @Inject
     private JmsService jmsService;
 
-    @Schedule(hour = "*", minute = "*", second = "*/10")
+    @Schedule(hour = "*", minute = "*", second = "*/30")
     public void doStuff() {
 //        LOG.info("Found {} customers, eventlog size: {}", customerRepository.count());
         jmsService.sendEvent(new EventMessage("doing stuff...."));

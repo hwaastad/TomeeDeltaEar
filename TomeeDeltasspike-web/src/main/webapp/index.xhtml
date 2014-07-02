@@ -11,7 +11,7 @@
         <p:growl autoUpdate="true" globalOnly="false"/>
         <h:form id="mainForm">
             <p:contextMenu for="table">
-                <p:menuitem value="view users" icon="ui-icon-view" oncomplete="PF('userVar').show()"  update=":userForm"/>
+                <p:menuitem value="view users" icon="ui-icon-view" oncomplete="PF('userVar').show()"  update=":userForm" actionListener="#{viewController.prepareView(event)}"/>
                 <p:menuitem value="add user" icon="ui-icon-view" oncomplete="PF('addUserVar').show()" update=":addUserForm" actionListener="#{viewController.prepareUser(event)}"/>
                 <p:menuitem value="edit" icon="ui-icon-edit" oncomplete="PF('editVar').show()" update=":editForm"/>
                 <p:menuitem value="delete" icon="ui-icon-edit" actionListener="#{viewController.delete(event)}" update="table"/>
@@ -28,7 +28,6 @@
                     <p:commandButton value="Add" oncomplete="PF('addVar').show()" actionListener="#{viewController.prepare(event)}" update=":addForm"/>
                 </f:facet>
             </p:dataTable>
-            <p:poll widgetVar="pollVal" interval="10" listener="#{viewController.updateTaleLitsner()}" update="table" />
         </h:form>
 
         <p:dialog widgetVar="addUserVar">
@@ -47,7 +46,11 @@
 
         <p:dialog widgetVar="userVar">
             <h:form id="userForm">
-                <p:dataTable value="#{viewController.customer.userCollection}" var="item">
+                <p:contextMenu for="dtable">
+                    <p:menuitem value="delete" actionListener="#{viewController.deleteUser(event)}" update="@form"/>
+                </p:contextMenu>
+                <p:dataTable id="dtable" value="#{viewController.customer.userCollection}" var="item" selectionMode="single"
+                             selection="#{viewController.user}" rowKey="#{item.id}">
                     <p:column headerText="Id">
                         <h:outputText value="#{item.id}"/>
                     </p:column>

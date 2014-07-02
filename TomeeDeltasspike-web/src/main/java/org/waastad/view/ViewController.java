@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.deltaspike.core.api.scope.WindowScoped;
+import org.apache.deltaspike.core.api.scope.ViewAccessScoped;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ import org.waastad.entity.DeltaUser;
  * @author Helge Waastad <helge.waastad@datametrix.no>
  */
 @Named
-@WindowScoped
+@ViewAccessScoped
 public class ViewController implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(ViewController.class);
@@ -43,10 +43,6 @@ public class ViewController implements Serializable {
     public void init() {
         dataList.addAll(deltaBean.findAll());
     }
-    
-    public void updateTaleLitsner(){
-        dataList = deltaBean.findAllCache();
-    }
 
     public void prepare(ActionEvent event) {
         customer = new DeltaCustomer();
@@ -56,18 +52,30 @@ public class ViewController implements Serializable {
         user = new DeltaUser();
     }
 
+    public void prepareView(ActionEvent event) {
+        customer = deltaBean.lookupCustomerById(customer.getId());
+    }
+
     public void saveUser(ActionEvent event) {
-        customer.getUserCollection().add(user);
-        deltaBean.save(customer);
+        customer = deltaBean.addUser(customer, user);
+        Messages.addGlobalInfo("User saved!");
+    }
+    
+    public void deleteUser(ActionEvent event){
+        deltaBean.deleteUser(customer, user);
+        customer.getUserCollection().remove(user);
+        Messages.addGlobalInfo("User deleted!");
     }
 
     public void save(ActionEvent event) {
         customer = deltaBean.save(customer);
+        dataList.add(customer);
         Messages.addGlobalInfo("Customer saved!");
     }
 
     public void delete(ActionEvent event) {
         deltaBean.delete(customer);
+        dataList.remove(customer);
         Messages.addGlobalInfo("Customer deleted!");
     }
 

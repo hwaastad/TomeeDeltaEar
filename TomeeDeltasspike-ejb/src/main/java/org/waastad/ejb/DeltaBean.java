@@ -15,6 +15,7 @@ import org.waastad.entity.DeltaUser;
 import org.waastad.jms.EventMessage;
 import org.waastad.jms.JmsService;
 import org.waastad.repository.CustomerRepository;
+import org.waastad.repository.EventLogRepository;
 import org.waastad.repository.UserRepository;
 
 /**
@@ -31,13 +32,31 @@ public class DeltaBean {
     @Inject
     private UserRepository userRepository;
     @Inject
+    private EventLogRepository eventLogRepository;
+    @Inject
     private JmsService jmsService;
 
     public DeltaCustomer save(DeltaCustomer customer) {
         LOG.info("Saving customer");
-        DeltaCustomer c =  customerRepository.save(customer);
+        DeltaCustomer c = customerRepository.saveAndFlushAndRefresh(customer);
         jmsService.sendEvent(new EventMessage("Customer saved", customer));
         return c;
+    }
+
+    public DeltaCustomer addUser(DeltaCustomer customer, DeltaUser user) {
+        LOG.info("Saving user");
+        DeltaCustomer c = customerRepository.findBy(customer.getId());
+        c.getUserCollection().add(user);
+        jmsService.sendEvent(new EventMessage("User saved", customer));
+        return c;
+    }
+
+    public void deleteUser(DeltaCustomer customer, DeltaUser user) {
+        LOG.info("Deleting user");
+        DeltaUser u = userRepository.findBy(user.getId());
+        DeltaCustomer c = customerRepository.findBy(customer.getId());
+        c.getUserCollection().remove(u);
+        jmsService.sendEvent(new EventMessage("User deleted", customer));
     }
 
     public DeltaCustomer lookupCustomer(String name) {
@@ -47,7 +66,14 @@ public class DeltaBean {
 
     public DeltaCustomer lookupCustomerById(Long id) {
         LOG.info("Lookup customerId");
-        return customerRepository.findBy(id);
+        DeltaCustomer c = customerRepository.findBy(id);
+        if (c != null) {
+            c.getUserCollection();
+            c.gettEventLogsCollection();
+        } else {
+            LOG.warn("Lookup customer is null!");
+        }
+        return c;
     }
 
     public DeltaCustomer update(DeltaCustomer customer) {
