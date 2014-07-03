@@ -5,16 +5,13 @@
  */
 package org.waastad.schedule;
 
-import java.util.List;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.waastad.entity.DeltaCustomer;
 import org.waastad.jms.EventMessage;
 import org.waastad.jms.JmsService;
-import org.waastad.qualifier.JmsSession;
 import org.waastad.repository.CustomerRepository;
 
 /**
@@ -32,9 +29,9 @@ public class Scheduler {
     @Inject
     private JmsService jmsService;
 
-    @Schedule(hour = "*", minute = "*", second = "*/30")
+    @Schedule(hour = "*", minute = "*", second = "*/10")
     public void doStuff() {
-//        LOG.info("Found {} customers, eventlog size: {}", customerRepository.count());
+        LOG.info("Found {} customers, eventlog size: {}", customerRepository.count());
         jmsService.sendEvent(new EventMessage("doing stuff...."));
 //        List<DeltaCustomer> c = customerRepository.findAll();
         

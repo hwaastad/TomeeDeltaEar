@@ -54,29 +54,34 @@ public class ViewController implements Serializable {
 
     public void prepareView(ActionEvent event) {
         customer = deltaBean.lookupCustomerById(customer.getId());
+        LOG.info("Preparing view for customer {}",customer.getName());
     }
 
     public void saveUser(ActionEvent event) {
         customer = deltaBean.addUser(customer, user);
         Messages.addGlobalInfo("User saved!");
+        LOG.info("User {} saved",user.getUsername());
     }
     
     public void deleteUser(ActionEvent event){
         deltaBean.deleteUser(customer, user);
         customer.getUserCollection().remove(user);
         Messages.addGlobalInfo("User deleted!");
+        LOG.info("User {} deleted",user.getUsername());
     }
 
     public void save(ActionEvent event) {
         customer = deltaBean.save(customer);
         dataList.add(customer);
         Messages.addGlobalInfo("Customer saved!");
+        LOG.info("Customer {} saved",customer.getName());
     }
 
     public void delete(ActionEvent event) {
         deltaBean.delete(customer);
         dataList.remove(customer);
         Messages.addGlobalInfo("Customer deleted!");
+        LOG.info("Customer {} deleted",customer.getName());
     }
 
     public void update(ActionEvent event) {

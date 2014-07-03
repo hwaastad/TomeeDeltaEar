@@ -10,6 +10,7 @@
         <module>TomeeDeltasspike-ear</module>
         <module>TomeeDeltasspike-web</module>
         <module>TomeeDeltasspike-ejb</module>
+        <module>TomeeDeltaspike-log</module>
     </modules>
     <properties>
         <deltaspike.version>1.0.0</deltaspike.version>

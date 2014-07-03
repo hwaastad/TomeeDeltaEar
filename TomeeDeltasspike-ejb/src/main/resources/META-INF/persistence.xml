@@ -27,6 +27,7 @@
             <property name="eclipselink.cache.coordination.jms.reuse-topic-publisher" value="true"/>
             <property name="eclipselink.cache.coordination.remove-connection-on-error" value="true"/>
             <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.logger" value="org.waastad.tomeedeltaspike.log.Slf4JEclipseLinkSessionLogger" />
             <property name="eclipselink.ddl-generation" value="create-tables"/>
         </properties>
     </persistence-unit>
