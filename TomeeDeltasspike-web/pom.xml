@@ -85,10 +85,17 @@
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
         </dependency>
-        <dependency>
+        
+      <!--  <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>TomeeDeltaspike-log</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

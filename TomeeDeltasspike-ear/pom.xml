@@ -78,7 +78,7 @@
                     <removeDefaultWebapps>false</removeDefaultWebapps>
                 </configuration>
             </plugin>
-            <plugin>
+           <!-- <plugin>
                 <groupId>org.apache.openejb.maven</groupId>
                 <artifactId>jarstxt-maven-plugin</artifactId>
                 <version>${openejb.version}</version>
@@ -92,7 +92,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
     <dependencies>

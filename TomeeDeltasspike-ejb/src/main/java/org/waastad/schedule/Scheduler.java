@@ -31,7 +31,7 @@ public class Scheduler {
 
     @Schedule(hour = "*", minute = "*", second = "*/10")
     public void doStuff() {
-        LOG.info("Found {} customers, eventlog size: {}", customerRepository.count());
+        LOG.debug("Found {} customers, eventlog size: {}", customerRepository.count());
         jmsService.sendEvent(new EventMessage("doing stuff...."));
 //        List<DeltaCustomer> c = customerRepository.findAll();
         

@@ -34,13 +34,13 @@ public class EntityManagerProducer {
     @Default
     @RequestScoped
     public EntityManager create() {
-        LOG.info("Producing entitymanager.....");
+        LOG.debug("Producing entitymanager.....");
         return this.entityManagerFactory.createEntityManager();
  
     }
 
     public void close(@Disposes @Default EntityManager em) {
-        LOG.info("Disposing entitymanager.....");
+        LOG.debug("Disposing entitymanager.....");
         if (em.isOpen()) {
             em.close();
         }
